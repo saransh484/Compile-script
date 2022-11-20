@@ -1,0 +1,41 @@
+#!/bin/bash
+
+source_file=$1
+
+compiled_file="${source_file%.*}"
+
+extension="${source_file#*.}"
+
+compile-c(){
+  gcc "${source_file}" -o "$compiled_file"
+  ./$compiled_file
+}
+compile-cpp(){
+  g++ "${source_file}" -o "$compiled_file"
+  ./$compiled_file
+}
+compile-java(){
+  javac "${source_file}"
+  java "${compiled_file}"
+}
+
+
+if [ "$source_file" == "" ]; then
+  echo "ERROR: No argument provided"
+
+elif [ $source_file ]; then
+
+  case "$extension" in
+    "c") compile-c
+    ;;
+    "cpp") compile-cpp
+    ;;
+    "java") compile-java
+    ;;
+  esac
+
+
+fi
+
+
+
